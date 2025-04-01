@@ -12,18 +12,12 @@ CREATE TABLE jobs (
                       description TEXT NOT NULL,
                       company_id INT NOT NULL,
                       location VARCHAR(255),
-                      needed_skills TEXT[],
                       years_of_experience INT CHECK (years_of_experience >= 0),
                       post_date DATE DEFAULT CURRENT_DATE,
                       salary DOUBLE PRECISION CHECK (salary >= 0),
                       CONSTRAINT fk_company FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE
 );
 
-CREATE TABLE job_skills (
-                            job_id INT NOT NULL,
-                            skill TEXT NOT NULL,
-                            CONSTRAINT fk_job FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE
-);
 
 CREATE TABLE job_seekers (
                              id SERIAL PRIMARY KEY,
@@ -32,17 +26,10 @@ CREATE TABLE job_seekers (
                              years_of_experience INT CHECK (years_of_experience >= 0),
                              city VARCHAR(255),
                              country VARCHAR(255),
-                             skills TEXT[],
                              email VARCHAR(255) UNIQUE NOT NULL,
-                             phone_number VARCHAR(15),
+                             phone VARCHAR(15),
                              last_active_date DATE DEFAULT CURRENT_DATE,
                             public_account BOOLEAN DEFAULT false
-);
-
-CREATE TABLE job_seeker_skills (
-                                   job_seeker_id INT NOT NULL,
-                                   skill TEXT NOT NULL,
-                                   CONSTRAINT fk_job_seeker FOREIGN KEY (job_seeker_id) REFERENCES job_seekers(id) ON DELETE CASCADE
 );
 
 CREATE TABLE job_applications (

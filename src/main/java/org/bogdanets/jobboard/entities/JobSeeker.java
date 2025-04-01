@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "job_seekers")
+@Table(name = "t_job_seekers")
 public class JobSeeker {
 
     @Id
@@ -23,11 +23,6 @@ public class JobSeeker {
 
     private String city;
     private String country;
-
-    @ElementCollection
-    @CollectionTable(name = "job_seeker_skills", joinColumns = @JoinColumn(name = "job_seeker_id"))
-    @Column(name = "skill")
-    private List<String> skills;
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -89,14 +84,6 @@ public class JobSeeker {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    public List<String> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(List<String> skills) {
-        this.skills = skills;
     }
 
     public String getEmail() {

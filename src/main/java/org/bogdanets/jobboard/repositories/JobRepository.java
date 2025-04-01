@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -43,14 +42,5 @@ public interface JobRepository extends JpaRepository<Job, Long> {
             WHERE j.title LIKE :title
             AND j.yearsOfExperience <= :yearsOfExperience""")
     List<Job> findAllByTitleAndYearsOfExperienceLessThanEqual(@Param("title") String title, @Param("yearsOfExperience") int yearsOfExperience);
-
-    @Query("""
-           SELECT j FROM Job j
-           JOIN j.skills s
-           WHERE s in :skills
-           GROUP BY j
-           ORDER BY s.size DESC""")
-    List<Job> findByAllSkills(@Param("skills") Collection<String> skills);
-
 
 }

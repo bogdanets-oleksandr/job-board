@@ -4,11 +4,12 @@ import org.bogdanets.jobboard.entities.JobSeeker;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 
+@Repository
 public interface JobSeekerRepository extends JpaRepository<JobSeeker, Long> {
 
     @Query("""
@@ -20,7 +21,7 @@ public interface JobSeekerRepository extends JpaRepository<JobSeeker, Long> {
     @Query("""
         SELECT s FROM JobSeeker s
         WHERE s.publicProfile = TRUE
-        AND S.city = :city""")
+        AND s.city = :city""")
     List<JobSeeker> findAllByCityAndPublicProfileIsTrue(@Param("city") String city);
 
     @Query("""
@@ -42,12 +43,4 @@ public interface JobSeekerRepository extends JpaRepository<JobSeeker, Long> {
         AND s.profession LIKE :profession
         AND s.experience >= :experience""")
     List<JobSeeker> findAllByProfessionAndExperienceGreaterThanEqual(@Param("profession") String profession, @Param("experience") int experience);
-
-    @Query("""
-           SELECT js FROM JobSeeker js
-           JOIN js.skills s
-           WHERE s in :skills AND js.publicProfile = TRUE
-           GROUP BY js
-           ORDER BY s.size DESC""")
-    List<JobSeeker> findAllBySkills(@Param("skills") Collection<String> skills);
 }
